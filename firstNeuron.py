@@ -48,7 +48,7 @@ class neuralNetwork:
       Elements in all_y_trues correspond to those in data.
     '''
     learn_rate = 0.1
-    epochs = 1000 # number of times to loop through the entire dataset
+    epochs = 1000
 
     for epoch in range(epochs):
       for x, y_true in zip(data, all_y_trues):
@@ -63,8 +63,7 @@ class neuralNetwork:
         o1 = sigmoid(sum_o1)
         y_pred = o1
 
-        # --- Calculate partial derivatives.
-        # --- Naming: d_L_d_w1 represents "partial L / partial w1"
+        # Calculate partial derivatives.
         d_L_d_ypred = -2 * (y_true - y_pred)
 
         # Neuron o1
@@ -85,7 +84,7 @@ class neuralNetwork:
         d_h2_d_w4 = x[1] * deriv_sigmoid(sum_h2)
         d_h2_d_b2 = deriv_sigmoid(sum_h2)
 
-        # --- Update weights and biases
+        # Update weights and biases
         # Neuron h1
         self.w1 -= learn_rate * d_L_d_ypred * d_ypred_d_h1 * d_h1_d_w1
         self.w2 -= learn_rate * d_L_d_ypred * d_ypred_d_h1 * d_h1_d_w2
@@ -101,7 +100,7 @@ class neuralNetwork:
         self.w6 -= learn_rate * d_L_d_ypred * d_ypred_d_w6
         self.b3 -= learn_rate * d_L_d_ypred * d_ypred_d_b3
 
-      # --- Calculate total loss at the end of each epoch
+      # Calculate total loss at the end of each epoch
       if epoch % 10 == 0:
         y_preds = np.apply_along_axis(self.feedforward, 1, data)
         loss = mse_loss(all_y_trues, y_preds)
